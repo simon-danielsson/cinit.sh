@@ -107,7 +107,10 @@ doc() {
 }
 
 help() {
-    printf "Project: \$name\\nVersion: \$VERSION\\nC Standard: \$c_version\\n"
+    printf "\\n"
+    printf "Project    : \$name\\n"
+    printf "Version    : \$VERSION\\n"
+    printf "C Standard : \$c_version\\n"
     printf "\\n"
     printf "\${col_cmd}run \${col_flag}debug\${CR}\\n"
     printf ": compile into and run from './build/debug' with debug options\\n"
