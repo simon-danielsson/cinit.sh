@@ -25,7 +25,8 @@
 cinit.sh follows the philosophy that everything one needs to build and maintain a C project should exist within the codebase itself. There are no extra dependencies you need to install to use this script - the only prerequisite is an up-to-date C compiler. The catalyst for this project was [nob.h](https://github.com/tsoding/nob.h), which cinit.sh and my entire C development workflow is based around.
   
 > [!IMPORTANT]  
-> 1. cinit.sh is heavily opinionated and built only for myself.
+> 1. cinit.sh is heavily opinionated and built only for myself. I can't
+>    guarantee that this will work properly on your computer.
 > 2. My goal is to give cinit.sh a complete development suite but I have not yet finished
 >    building the tooling or setting up the signal flow (it is functional though).
   
