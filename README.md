@@ -45,7 +45,6 @@ alias cinit="~/dev/bash/cinit/cinit.sh"
 Run in your destination folder with the project name as an argument.  
   
 ``` bash
-# ~/.bashrc
 cinit my_project
 ```
  
