@@ -107,7 +107,7 @@ help() {
 
     printf "\\n"
     printf "\${col_cmd}run \${col_flag}test\${CR}\\n"
-    printf ": compiles into and run './build/tests' directory with debug options\\n"
+    printf ": compile into and run './build/tests' directory with debug options\\n"
     printf ": the source folder used for this command is './tests'\\n"
 
     printf "\\n"
