@@ -1,4 +1,6 @@
-## cinit.sh
+<h2 align="center">
+  <em>cinit.sh</em>
+</h2>
   
 <p align="center">
   <em>Tiny C project generator</em>
