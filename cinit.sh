@@ -167,7 +167,7 @@ update() {
 }
 
 doc() {
-    echo "not implemented yet"
+    ./tools/cdok/cdok ./src
 }
 
 help() {
@@ -393,6 +393,20 @@ mkdir -p "$target_dir/src/libs"; cd "$target_dir/src/libs"
 curl -O https://raw.githubusercontent.com/simon-danielsson/analib.h/refs/heads/main/analib.h || {
     error "Failed to curl analib.h from the analib.h github repo"
 }
+
+# get latest version of cdok from repo
+
+cd "$target_dir/tools"
+git clone https://github.com/simon-danielsson/cdok
+cd cdok
+./run release
+mv ./build/release/cdok $target_dir/tools/main
+cd "$target_dir/tools"
+zip -r cdok.zip cdok
+rm -rf cdok
+mkdir -p cdok
+mv main ./cdok/cdok
+mv cdok.zip ./cdok/cdok-src_$current_date.zip
 
 # get latest version of jobb from repo
 cd "$target_dir/tools"
