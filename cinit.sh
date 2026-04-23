@@ -144,8 +144,7 @@ case "\$1" in
     doc
     ;;
   *)
-    build_release
-    run
+    build_debug
     ;;
 esac
 
