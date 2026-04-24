@@ -204,7 +204,7 @@ help() {
     printf "\${col_cmd}run \${col_flag}release\${CR}\\n"
     printf "╰ compile into and run from './build/release' with optimizations\\n"
     printf "\${col_cmd}run \${col_flag}test\${CR}\\n"
-    printf "│ compile into and run './build/tests' directory with debug options\\n"
+    printf "│ compile into and run from './build/tests' directory with debug options\\n"
     printf "╰ the source folder used for this command is './tests'\\n"
     printf "\\n"
     printf "\${col_cmd}run \${col_subc}doc\${CR}\\n"
