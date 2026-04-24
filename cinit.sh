@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # cinit.sh
-# v0.2.4
+# v0.2.5
 #
 # Copyright © 2026 Simon Danielsson
 #
@@ -71,7 +71,7 @@ name="$name"
 c_standard="gnu23"
 current_date=\$(date +"%F")
 
-latest_git_commit=\$(git log -1 --format='%ad' --date=format:'%a %d %b %Y')
+latest_git_commit=\$(git log -1 --format='%ad' --date=format:'%d %b %Y')
 
 get_version() {
     git describe --tags --abbrev=0 2>/dev/null || echo "v0.1.0"
@@ -162,7 +162,9 @@ doc() {
 
 restore() {
     git reset --hard HEAD
+    git clean -f
     git clean -fd
+    git clean -fdx
 }
 
 help() {
@@ -170,7 +172,7 @@ help() {
     printf "Project name     :  \$name\\n"
     printf "Current version  :  \$VERSION\\n"
     printf "Latest commit    :  \$latest_git_commit\\n"
-    printf "First created    :  \$(date +"%a %d %b %Y")\\n"
+    printf "First created    :  $(date +"%d %b %Y")\\n"
     printf "C Standard       :  \$c_standard\\n"
 
     printf "\\n"
