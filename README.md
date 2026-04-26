@@ -114,7 +114,7 @@ cenv tag <version>
 
 ### cenv todo
   
-This is a search utility, but don't be mistaken! It cannot be compared to tools such as grep and ripgrep due to it only being optimized for finding 'TODO' statements in codebases - but its very good at it! 'cenv todo' returns a formatted list of all 'TODO' statements found, each with a reference to file and line number. In addition to this, 'cenv todo' collects entire 'TODO' paragraphs, not just lines.
+'cenv todo' returns a formatted list of all 'TODO' statements found, each with a reference to file and line number. In addition to this, 'cenv todo' collects entire 'TODO' paragraphs, not just lines.
   
 ### cenv doc
   
