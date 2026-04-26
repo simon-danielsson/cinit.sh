@@ -165,6 +165,26 @@ todo() {
     ./tools/jobb/jobb ./tests
 }
 
+doc() {
+    mkdir -p ./tools/cenv_toolkit/gen
+    ./tools/cenv_toolkit/cenv_toolkit -t . -d ./tools/cenv_toolkit/gen doc
+    gen="./tools/cenv_toolkit/gen/index.html"
+
+    if command -v open >/dev/null 2>&1; then
+        open "\$gen" > /dev/null 2>&1 &
+    elif command -v xdg-open >/dev/null 2>&1; then
+        xdg-open "\$gen" > /dev/null 2>&1 &
+    else
+        echo "No opener found (open or xdg-open)" >&2
+        return 1
+    fi
+}
+
+todo() {
+    ./tools/cenv_toolkit/cenv_toolkit -t ./src -d ./src todo
+    ./tools/cenv_toolkit/cenv_toolkit -t ./tests -d ./tests todo
+}
+
 update_header_only_lib() {
     lib_name="\$1"; lib_path="\$2"; lib_repo_raw="\$3"; root=\$(pwd)
     cd "\$lib_path"
@@ -184,13 +204,25 @@ update_header_only_lib() {
 }
 
 update() {
+    # update cenv_toolkit
+    root_dir=\$(pwd)
+    cd "./tools"
+    rm -rf cenv_toolkit
+    git clone https://github.com/simon-danielsson/cenv_toolkit
+    \$root_dir/tools/cenv_toolkit/run build_release_for_cenv
+    mv \$root_dir/tools/cenv_toolkit/build/release/* \$root_dir/tools/main
+    cd \$root_dir/tools
+    zip -r cenv_toolkit.zip cenv_toolkit
+    rm -rf cenv_toolkit
+    mkdir -p cenv_toolkit
+    mv main ./cenv_toolkit/cenv_toolkit
+    mv cenv_toolkit.zip ./cenv_toolkit/cenv_toolkit-src_\$current_date.zip
+    printf "\\n\${col_scs}'cenv_toolkit' was updated successfully!\${CR}\\n"
+    cd \$root_dir
+
     update_header_only_lib "stb_sprintf.h" "./libs" "https://raw.githubusercontent.com/nothings/stb/refs/heads/master/stb_sprintf.h"
     update_header_only_lib "analib.h" "./libs" "https://raw.githubusercontent.com/simon-danielsson/analib.h/refs/heads/main/analib.h"
     update_header_only_lib "nob.h" "./tools/nob" "https://raw.githubusercontent.com/tsoding/nob.h/refs/heads/main/nob.h"
-}
-
-doc() {
-    ./tools/cdok/cdok ./src
 }
 
 restore() {
@@ -210,7 +242,7 @@ help() {
 
     printf "\${col_cmd}cenv \${col_flag}debug\${CR}\\n"
     printf "│ compile into and run from './build/debug' with debug options\\n"
-    printf "╰ if the 'run' command is ran without flags, it defaults to the debug build\\n"
+    printf "╰ if 'cenv' is ran without flags, it defaults to the debug build\\n"
 
     printf "\${col_cmd}cenv \${col_flag}release\${CR}\\n"
     printf "╰ compile into and run from './build/release' with optimizations\\n"
@@ -222,15 +254,15 @@ help() {
     printf "\\n"
 
     printf "\${col_cmd}cenv \${col_subc}doc\${CR}\\n"
-    printf "│ (./tools/cdok) auto-generate docs from './src' and open in browser\\n"
-    printf "╰ not implemented yet...\\n"
+    printf "│ auto-generate docs from './src' and open in browser\n"
+    printf "╰ this command is still in the experimental stage\n"
 
     printf "\${col_cmd}cenv \${col_subc}todo\${CR}\\n"
-    printf "╰ (./tools/jobb) find 'TODO' statements in codebase\\n"
+    printf "╰ find and print all 'TODO' statements in codebase\\n"
 
     printf "\${col_cmd}cenv \${col_subc}update\${CR}\\n"
     printf "│ update bundled cenv tools and header-only libraries from their\\n"
-    printf "╰ known upstream git sources - user-added dependencies are ignored\\n"
+    printf "╰ known upstream git sources - user-added dependencies are safely ignored\\n"
 
     printf "\${col_cmd}cenv \${col_subc}help\${CR}\\n"
     printf "╰ display help\\n"
@@ -238,7 +270,7 @@ help() {
     printf "\\n"
 
     printf "\${col_cmd}cenv \${col_git}restore\${CR}\\n"
-    printf "╰ (git) hanges and revert to the latest commit\\n"
+    printf "╰ (git) HARD reset to latest commit\\n"
 
     printf "\${col_cmd}cenv \${col_git}tag <version>\${CR}\\n"
     printf "│ (git) create new annotated tag\\n"
@@ -446,33 +478,20 @@ curl -O https://raw.githubusercontent.com/nothings/stb/refs/heads/master/stb_spr
     error "Failed to curl from the stb_sprintf.h github repo"
 }
 
-# get latest version of cdok from repo
-# cd "$target_dir/tools"
-# git clone --depth 1 https://github.com/simon-danielsson/cdok
-# cd cdok
-# printf "building...\n"
-# ./run release
-# mv ./build/release/* $target_dir/tools/main
-# cd "$target_dir/tools"
-# zip -r cdok.zip cdok
-# rm -rf cdok
-# mkdir -p cdok
-# mv main ./cdok/cdok
-# mv cdok.zip ./cdok/cdok-src_$current_date.zip
-#
-# # get latest version of jobb from repo
-# cd "$target_dir/tools"
-# git clone --depth 1 https://github.com/simon-danielsson/jobb
-# cd jobb
-# ./dev compile
-# mv ./build/main ..
-# cd "$target_dir/tools"
-# zip -r jobb.zip jobb
-# rm -rf jobb
-# mkdir -p jobb
-# mv main ./jobb/jobb
-# mv jobb.zip ./jobb/jobb-src_$current_date.zip
-#
+# get latest version of cenv_toolkit from repo
+cd "$target_dir/tools"
+git clone --depth 1 https://github.com/simon-danielsson/cenv_toolkit
+cd cenv_toolkit
+printf "building...\n"
+./run build_release_for_cenv
+mv ./build/release/* $target_dir/tools/main
+cd "$target_dir/tools"
+zip -r cenv_toolkit.zip cenv_toolkit
+rm -rf cenv_toolkit
+mkdir -p cenv_toolkit
+mv main ./cenv_toolkit/cenv_toolkit
+mv cenv_toolkit.zip ./cenv_toolkit/cenv_toolkit-src_$current_date.zip
+
 # generate main.h
 mkdir -p "$target_dir/src"; touch "$target_dir/src/env.h"
 cat > "$target_dir/src/env.h" <<EOF
@@ -518,6 +537,7 @@ EOF
 # generate main.c
 mkdir -p "$target_dir/src"; touch "$target_dir/src/main.c"
 cat > "$target_dir/src/main.c" <<EOF
+//! main entry point of program
 #include "env.h"
 
 // TODO: write a program

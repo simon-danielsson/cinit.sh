@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <em>C project generator and<br>development suite.</em>
+  <em>C without ceremony.</em>
 </p>
   
 <p align="center">
@@ -13,6 +13,7 @@
   
 <p align="center">
   <a href="#info">Info</a> •
+  <a href="#install">Install</a> •
   <a href="#usage">Usage</a> •
   <a href="#license">License</a>
 </p>  
@@ -22,21 +23,27 @@
 
 ## Info
   
-cenv follows the philosophy that everything one needs to build and maintain a C project should exist within the codebase itself. There are no extra dependencies you need to install to use this script - the only prerequisites is git, curl and an up-to-date C compiler. The catalyst for this project was [nob.h](https://github.com/tsoding/nob.h), which cenv and my entire C development workflow is based around.
+**cenv is an opinionated C project environment built for fast and iterative workflows.**
+  
+Everything required to build and maintain a C project should exist within the codebase itself.
+  
+Prerequisites:  
+- git  
+- curl  
+- a C compiler  
   
 > [!IMPORTANT]  
-> 1. cenv is heavily opinionated and built only for myself. I can't
->    guarantee that this will work properly on your computer.
-> 2. My goal is to give cenv a complete development suite but I have not yet finished
->    building the tooling or setting up the signal flow (it is functional though).
+> 1. No support for Windows.
+> 2. Since cenv is heavily opinionated and built for my own specific workflow, I can't
+> guarantee that this will function properly on your computer.
   
 
 ---
-<div id="usage"></div>
+<div id="install"></div>
 
-## Usage
+## Install
   
-Add the init script as an alias in your `.bashrc`:  
+Clone [cenv-init.sh](./cenv-init.sh) and add it as an alias in your `.bashrc`:  
   
 ``` bash
 # ~/.bashrc
@@ -45,18 +52,55 @@ Add the init script as an alias in your `.bashrc`:
 alias cinit="$HOME/path/to/cenv-init.sh"
 
 # this function is to make the cenv build script 
-# easier to run within the generated project 
+# easier to run within generated projects 
 cenv() {
   ./cenv "$@"
 }
 ```
   
-Run in your destination folder with the project name as an argument.  
+---
+<div id="usage"></div>
+  
+## Usage
+  
+Run cinit in your destination folder with the project name as an argument, then run the help command to get started:  
   
 ``` bash
 cinit my_project
 cd my_project
 cenv help
+```
+ 
+When you run `cenv help` you will see the following commands:
+
+``` bash
+
+cenv debug
+│ compile into and run from './build/debug' with debug options
+╰ if 'cenv' is ran without flags, it defaults to the debug build
+cenv release
+╰ compile into and run from './build/release' with optimizations
+cenv test
+│ compile into and run from './build/tests' directory with debug options
+╰ the source folder used for this command is './tests'
+
+cenv doc
+│ auto-generate docs from './src' and open in browser
+╰ this command is still in the experimental stage
+cenv todo
+╰ find and print all 'TODO' statements in codebase
+cenv update
+│ update bundled cenv tools and header-only libraries from their
+╰ known upstream git sources - user-added dependencies are safely ignored
+cenv help
+╰ display help
+
+cenv restore
+╰ (git) HARD reset to latest commit
+cenv tag <version>
+│ (git) create new annotated tag
+╰ ex.: run tag v1.2.1
+
 ```
  
 ---
