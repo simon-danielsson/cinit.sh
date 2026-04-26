@@ -161,6 +161,10 @@ int submult(int y, int x) {
     return (y - x) * MULT;
 }
 ```
+### example generated cenv documentation pages
+  
+![cenv_doc](./media/cenv_doc.png)
+![cenv_doc2](./media/cenv_doc2.png)
   
 ---
 <div id="license"></div>
