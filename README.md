@@ -25,7 +25,7 @@
   
 **cenv is an opinionated C project environment built for fast and iterative workflows.**
   
-Everything required to build and maintain a C project should exist within the codebase itself.
+Everything required to build and maintain a C project exists within the codebase itself.
   
 Prerequisites:  
 - git  
