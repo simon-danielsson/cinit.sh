@@ -110,9 +110,11 @@ cenv tag <version>
   
 ## Toolkit
     
+[source code for the cenv toolkit can be found here](https://github.com/simon-danielsson/cenv_toolkit)
+
 ### cenv doc
   
-cenv comes bundled with its own documentation parser that generates a static webpage you can browse, similar to the 'cargo doc' system from Rust. The syntax is simple to understand and is explained within the following example code.
+cenv comes bundled with its own auto-documentation tool that generates a static html page you can browse, similar to the 'cargo doc' system from Rust. The syntax is simple to understand and is explained within the following example code.
   
 ``` c
 //! Math utilities
