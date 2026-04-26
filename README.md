@@ -23,7 +23,7 @@
 
 ## Info
   
-The main philosophy of cenv is that everything required to build and maintain a C project should exist within the codebase itself. It is a opinionated development environment built for developing small/medium sized C projects fast and iteratively.
+The main philosophy of cenv is that **everything required to build and maintain a C project should exist within the codebase itself**. It is an *opinionated* development environment built for developing small/medium sized C projects *fast* and *iteratively*.
   
 Prerequisites:  
 - git  
