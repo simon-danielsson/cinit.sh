@@ -33,7 +33,8 @@ Prerequisites:
 > [!IMPORTANT]  
 > 1. No support for Windows.
 > 2. Since cenv is heavily opinionated and built for my own specific workflow, I can't
-> guarantee that this will function properly on your computer.
+> guarantee that this will function properly on your computer (or be enjoyable
+> to use.)
   
 cenv relies on [nob.h](https://github.com/tsoding/nob.h) (a header-only
 build-system) for compilation.  
