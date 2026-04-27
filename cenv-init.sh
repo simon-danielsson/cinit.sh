@@ -607,7 +607,9 @@ EOF
 cd "$target_dir"; touch "$target_dir/.gitignore"
 cat > "$target_dir/.gitignore" <<EOF
 build.sh
-nob/nob
+/tools/cenv_toolkit/gen
+/tools/cenv_toolkit/gen/*
+/tools/nob/nob
 nvim.log
 /build
 /build/*
