@@ -47,7 +47,7 @@ build-system) for compilation.
 
 ## Install
   
-Clone [cenv-init.sh](./cenv-init.sh) and add it as an alias in your `.bashrc`:  
+[cenv-init.sh](./cenv-init.sh) is what you will be using to build new cenv projects - add it as an alias in your `.bashrc`:  
   
 ``` bash
 # ~/.bashrc
@@ -55,10 +55,19 @@ Clone [cenv-init.sh](./cenv-init.sh) and add it as an alias in your `.bashrc`:
 # cinit script
 alias cinit="$HOME/path/to/cenv-init.sh"
 
-# this function is to make the cenv build script 
-# easier to run within generated projects 
+# this function lets you launch cenv from anywhere
+# within your cenv project folder (assuming you have
+# a .gitignore in its root)
 cenv() {
-  ./cenv "$@"
+    local dir="$(pwd)"
+    while [[ "$dir" != "/" ]]; do
+        if [[ -f "$dir/.gitignore" ]]; then
+            (cd "$dir" && ./cenv "$@")
+            return
+        fi
+        dir="$(dirname "$dir")"
+    done
+    return 1
 }
 ```
   
