@@ -43,7 +43,7 @@ in your .bashrc (or an equivalent file in your shell path) and you're good to go
 
 cenv() {
     local dir="$(pwd)"
-    while [[ "$dir" != "/" ]]; do
+    while [[ "$dir" != "$HOME" ]]; do
         if [[ -f "$dir/cenv" ]]; then
             (cd "$dir" && ./cenv "$@")
             return
