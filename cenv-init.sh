@@ -188,6 +188,45 @@ doc() {
     ./tools/cdok/cdok -s ./src -d ./tools/cdok/gen -o
 }
 
+update_header_only_lib() {
+    lib_name="\$1"; lib_path="\$2"; lib_repo_raw="\$3"; root=\$(pwd)
+    cd "\$lib_path"
+    mv \$lib_name \$lib_name.bak
+    printf "\\nFetching latest version of \$lib_name...\\n"
+    curl -O \$lib_repo_raw || {
+        error "Failed to curl \$lib_name from the \$lib_name github repo"
+    }
+    if [ -f "\$lib_name" ]; then
+        rm \$lib_name.bak
+        printf "\\n\${col_scs}'\$lib_name' was updated successfully!\${CR}\\n"
+    else
+        mv \$lib_name.bak \$lib_name
+        printf "\\n\${col_flag}'\$lib_name' couldn't be updated!\${CR}\\n"
+    fi
+    cd \$root
+}
+
+update() {
+    # update cdok
+    root_dir=\$(pwd)
+    cd "./tools"
+    rm -rf cdok
+    git clone https://github.com/simon-danielsson/cdok
+    \$root_dir/tools/cdok/run build_release_for_cenv
+    mv \$root_dir/tools/cdok/build/release/* \$root_dir/tools/main
+    cd \$root_dir/tools
+    zip -r cdok.zip cdok
+    rm -rf cdok
+    mkdir -p cdok
+    mv main ./cdok/cdok
+    mv cdok.zip ./cdok/cdok-src_\$current_date.zip
+    printf "\\n\${col_scs}'cdok' was updated successfully!\${CR}\\n"
+    cd \$root_dir
+
+    update_header_only_lib "ana.h" "./src/libs" "https://raw.githubusercontent.com/simon-danielsson/ana.h/refs/heads/main/ana.h"
+    update_header_only_lib "nob.h" "./tools/nob" "https://raw.githubusercontent.com/tsoding/nob.h/refs/heads/main/nob.h"
+}
+
 tidy() {
     printf "Tidying up codebase...\\n"
     find . -type f \\( \
@@ -228,6 +267,10 @@ help() {
     printf "\${col_cmd}cenv \${col_subc}doc\${CR}\\n"
     printf "│ auto-generate docs from './src' and open in browser\n"
     printf "╰ this command is still in the experimental stage\n"
+
+    printf "\${col_cmd}cenv \${col_subc}update\${CR}\\n"
+    printf "│ update bundled tools and libraries from their upstream git sources\\n"
+    printf "╰ user-added dependencies are safely ignored\\n"
 
     printf "\${col_cmd}cenv \${col_subc}tidy\${CR}\\n"
     printf "╰ clean up log, debug and object files\\n"
