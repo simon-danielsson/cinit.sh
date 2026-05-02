@@ -208,20 +208,19 @@ update_header_only_lib() {
 
 update() {
     # update cdok
-    root_dir=\$(pwd)
-    cd "./tools"
+    cd "\$root/tools"
     rm -rf cdok
     git clone https://github.com/simon-danielsson/cdok
-    \$root_dir/tools/cdok/run release
-    mv \$root_dir/tools/cdok/build/release/* \$root_dir/tools/main
-    cd \$root_dir/tools
+    \$root/tools/cdok/run release
+    mv "\$root/tools/cdok/build/release/cdok" "\$root/tools/main"
+    cd \$root/tools
     zip -r cdok.zip cdok
     rm -rf cdok
     mkdir -p cdok
     mv main ./cdok/cdok
     mv cdok.zip ./cdok/cdok-src_\$current_date.zip
     printf "\\n\${col_scs}'cdok' was updated successfully!\${CR}\\n"
-    cd \$root_dir
+    cd \$root
 
     update_header_only_lib "ana.h" "./src/libs" "https://raw.githubusercontent.com/simon-danielsson/ana.h/refs/heads/main/ana.h"
     update_header_only_lib "nob.h" "./tools/nob" "https://raw.githubusercontent.com/tsoding/nob.h/refs/heads/main/nob.h"
