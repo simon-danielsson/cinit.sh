@@ -36,9 +36,11 @@ cenv assumes that everything required to build and maintain a C project should l
 ## Install
   
 There is no installation in the traditional sense. Just add these two functions
-in your .bashrc or an equivalent file.
+in your .bashrc or an equivalent file in your shell path.
   
 ``` bash
+#!/usr/bin/env bash
+
 cenv() {
     local dir="$(pwd)"
 
