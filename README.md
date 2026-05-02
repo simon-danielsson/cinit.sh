@@ -36,14 +36,13 @@ cenv assumes that everything required to build and maintain a C project should l
 ## Install
   
 There is no installation in the traditional sense. Just add these two functions
-in your .bashrc or an equivalent file in your shell path.
+in your .bashrc (or an equivalent file in your shell path) and you're good to go.
   
 ``` bash
 #!/usr/bin/env bash
 
 cenv() {
     local dir="$(pwd)"
-
     while [[ "$dir" != "/" ]]; do
         if [[ -f "$dir/cenv" ]]; then
             (cd "$dir" && ./cenv "$@")
@@ -51,10 +50,10 @@ cenv() {
         fi
         dir="$(dirname "$dir")"
     done
-
     echo "no project root found" >&2
     return 1
 }
+
 cinit() {
     curl -O https://raw.githubusercontent.com/simon-danielsson/cenv/refs/heads/main/cenv-init.sh || {
         error "failed to curl cenv-init.sh"
@@ -93,6 +92,9 @@ cenv test
 cenv doc
 │ auto-generate docs from './src' and open in browser
 ╰ this command is still in the experimental stage
+cenv update
+│ update bundled tools and libraries from their upstream git sources
+╰ user-added dependencies are safely ignored
 cenv tidy
 ╰ clean up log, debug and object files
 cenv help
