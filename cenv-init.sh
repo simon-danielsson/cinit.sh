@@ -82,8 +82,6 @@ author="Simon Danielsson"
 author_contact="contact@simondanielsson.se"
 c_standard="gnu23"
 
-root="$target_dir"
-
 c_flags_test=(
     "-std=$c_version" "-g" "-O0" "-DDEBUG" "-fsanitize=address"
     "-Wall" "-Wextra" "-Wpedantic" "-Wshadow" "-Werror=format-security"
