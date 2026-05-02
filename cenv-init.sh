@@ -212,7 +212,7 @@ update() {
     cd "./tools"
     rm -rf cdok
     git clone https://github.com/simon-danielsson/cdok
-    \$root_dir/tools/cdok/run build_release_for_cenv
+    \$root_dir/tools/cdok/run release
     mv \$root_dir/tools/cdok/build/release/* \$root_dir/tools/main
     cd \$root_dir/tools
     zip -r cdok.zip cdok
