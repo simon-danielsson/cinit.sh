@@ -517,7 +517,6 @@ mkdir -p "$target_dir/src"; touch "$target_dir/src/env.h"
 cat > "$target_dir/src/env.h" <<EOF
 
 // libraries
-#define ANALIB_IMPLEMENTATION
 #include "./libs/ana.h"
 
 // standard libraries
@@ -556,6 +555,7 @@ EOF
 mkdir -p "$target_dir/src"; touch "$target_dir/src/main.c"
 cat > "$target_dir/src/main.c" <<EOF
 //! main entry point of program
+#define ANA_IMPLEMENTATION
 #include "env.h"
 
 // TODO: write a program
